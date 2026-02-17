@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whenever You Miss Me 💗</title>
+
+<!-- Cute Rounded Font -->
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+body {
+    margin: 0;
+    font-family: 'Baloo 2', cursive;
+    background: linear-gradient(-45deg, 
+        #ffe6f2,
+        #e9ddff,
+        #d6f0ff,
+        #ffd9ec,
+        #cfe3ff
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 18s ease infinite;
+    text-align: center;
+    color: #5f4b7a;
+}
+
+span {
+    font-family: 'Baloo 2', cursive;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Floating hearts */
+.hearts::before,
+.hearts::after {
+    content: "❤";
+    position: fixed;
+    font-size: 18px;
+    opacity: 0.12;
+    animation: floatHearts 20s linear infinite;
+}
+
+.hearts::after {
+    left: 80%;
+    animation-delay: 10s;
+}
+
+@keyframes floatHearts {
+    0% { top: 100%; transform: translateX(0); }
+    100% { top: -10%; transform: translateX(40px); }
+}
+
+h1 {
+    margin-top: 40px;
+    font-size: 30px;
+}
+
+.subtitle {
+    margin-top: -10px;
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+.app-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px 20px 10px 20px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(15px);
+    border-radius: 35px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+}
+
+/* Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.grid button {
+    height: 140px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.grid button:hover {
+    transform: scale(1.05);
+}
+
+.grid button i {
+    font-size: 28px;
+    color: #ff8fb1;
+}
+
+/* Active glow */
+.grid button.active {
+    box-shadow: 
+        0 0 25px rgba(255, 150, 200, 0.8),
+        0 10px 25px rgba(0,0,0,0.08);
+    transform: scale(1.05);
+}
+
+/* Output card */
+.output-card {
+    margin: 20px auto;
+    max-width: 500px;
+    display: none;
+}
+
+.card {
+    background: rgba(255,255,255,0.95);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* Flip card */
+.flip-card {
+    perspective: 1000px;
+}
+
+.flip-inner {
+    position: relative;
+    width: 100%;
+    min-height: 250px;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.flip-card.flipped .flip-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-front, .flip-back {
+    position: absolute;
+    width: 100%;
+    backface-visibility: hidden;
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.flip-back {
+    transform: rotateY(180deg);
+}
+
+.memory-images {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.memory-images img {
+    flex: 1 1 48%;
+    border-radius: 15px;
+    width: 100%;
+    object-fit: cover;
+}
+
+
+audio {
+    margin-top: 10px;
+    width: 100%;
+}
+
+/* Secret popup */
+.secret-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.secret-box {
+    background: white;
+    padding: 30px;
+    border-radius: 25px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    animation: popIn 0.4s ease;
+    position: relative;
+}
+
+.secret-title {
+    margin-top: 0;
+    font-size: 20px;
+    color: #ff6fa5;
+    margin-bottom: 10px;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.close-secret {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 18px;
+    cursor: pointer;
+    color: #999;
+}
+
+.close-secret:hover {
+    color: #ff8fb1;
+}
+
+.hidden {
+    display: none;
+}
+
+footer {
+    margin: 40px;
+    opacity: 0.7;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="hearts"></div>
+
+<div class="app-container">
+    <h1>Whenever You Miss Me 💗</h1>
+    <p class="subtitle">For the days you miss me a little extra.</p>
+
+    <div class="grid">
+        <button onclick="activateTile(this); showCompliment()">
+            <i class="fa-solid fa-heart"></i>
+            <span>Things I love about you</span>
+        </button>
+
+        <button onclick="activateTile(this); showVoice()">
+            <i class="fa-solid fa-microphone"></i>
+            <span>Voice Message</span>
+        </button>
+
+        <button onclick="activateTile(this); showCountdown()">
+            <i class="fa-solid fa-hourglass-half"></i>
+            <span>Countdown</span>
+        </button>
+
+        <button onclick="activateTile(this); showQuiz()">
+            <i class="fa-solid fa-seedling"></i>
+            <span>Memory Quiz</span>
+        </button>
+    </div>
+
+    <div class="output-card" id="outputCard">
+        <div id="outputContent"></div>
+    </div>
+</div>
+
+<footer>Made with love 💗</footer>
+
+<!-- Secret Popup -->
+<div id="secretPopup" class="secret-popup hidden">
+    <div class="secret-box">
+        <span class="close-secret" onclick="closeSecret()">×</span>
+        <h2 class="secret-title">You found a secret message! 💌</h2>
+        <p id="secretText"></p>
+    </div>
+</div>
+
+<script>
+
+function activateTile(button) {
+    const buttons = document.querySelectorAll(".grid button");
+    buttons.forEach(btn => btn.classList.remove("active"));
+    button.classList.add("active");
+}
+
+function showCard(content) {
+    const card = document.getElementById("outputCard");
+    const contentDiv = document.getElementById("outputContent");
+    contentDiv.innerHTML = content;
+    card.style.display = "block";
+}
+
+const compliments = [
+    "You are very thoughtful. You always surprise me with how deep you take yourself into certain topics. You display great listening behavior and always ask great questions!",
+    "You are the best chef I know! I’m someone who cooks in a way that’s convenient for me, but you set a high standard for quality and I respect you so much for that. Also as you like to say, someone who wants to be a great chef must first understand how to taste :)",
+    "You go above and beyond for your friends and family. Without being asked to, without showing any annoyance or inconvenience, you will perform acts to help others out. You’re amazing for that!",
+    "You give the best hugs! When I’m tired, it’s your big bear hugs that make me feel so safe and warm.",
+    "I love your face. Do i say this enough? You are so adorable. ",
+    "You don’t show any hesitation toward sharing. It’s like it’s an automatic response. Maybe it comes from your family too. I love that you share food, you share gatekept spots (only if you are going to haha), you share your recent interests, you share your friends and family. Relationships are great because we can enjoy double!! Thank you for sharing your time and valuable things with me :)",
+    "You have a great memory. You’re so good at remembering small moments we shared in the past, and when you bring them up it tells me you value every moment we spend together.",
+    "I like that you have the same passion for design as me! Turning this passion into a career is nice but hard at times, and I’m glad there’s someone who understands. also if I have to rant about work you will know what I'm talking about (like components on figma….)",
+    "You are very good with your words :0 I think you’re creative with how you phrase things, and often your texts make me blush or laugh.",
+    "I love how you love music. I mean, I would never get close to someone who doesn’t like music as much as I do, but I'm glad you’re someone who has the same appreciation for music (both listening and playing!)",
+    "I’m so grateful you have an appreciation for Japanese culture. It’s so cool that you’re learning Japanese on Duolingo, and that you have a lot of knowledge about Japanese music, food, anime, etc. I think my family loves you for that too!",
+    "I love that you’re well-connected to your Chinese heritage. I don’t thinks it’s recognized enough how impressive and important it is to connect back to your roots. I’m also grateful that you share it with me! And thank you for always ordering at Chinese restaurants, I trust that you will order the best of the best.",
+    "You are so patient. maybe it seems like you have a lot of patience compared to how less I have it haha. Thank you for keeping up with my moodiness and being understanding of what I need at the moment. I’m sorry for making things difficult sometimes.",
+    "Your spontaneity gives me a lot of excitement. I’m used to feeling like I need a strict schedule to make the most out of something, but I've learned through you that sometimes it’s better to leave things to the flow. That way there could be more unexpected surprises!",
+    "You’re a great driver! I like that you’re very confident with that. Thank you for driving me everywhere whenever I'm back home.",
+    "I love that there's a difference between your goofy, funny side and your serious, genuine side. Sometimes it makes me feel there's a side of you that you only show to me, and it makes me feel special. I know there are a lot of thoughts that lie within you, and I appreciate you sharing them with me time to time!",
+    "Whenever there's a moment you want to remember, I love that you pull out your phone to capture it! I've talked about this before, but it's something I've noticed since we were at Chapman. It gave me the impression that you value the time you spend with friends, and want those memories to live on forever!",
+    "It's very cool how you're good at building things. I'm usually not used to doing hands-on things, so I have so much respect to that talent of yours! Thank you for helping me build that shelf that one time hehe",
+    "I think the fact that you've had several jobs in the past makes you even more interesting. It probably has built part of your character and attitude towards things, and also it's fun listening to your previous work stories!",
+    "I like that you always have a jacket/coat in your car. It shows that you're prepared. And you always offer it to me when it's cold outside, which is so sweet!!!",
+    "I'm so glad you're a tea lover. I've always loved tea, but I feel like I appreciate more now that I'm dating you!! I love how there's so many varieties of tea, and it helps me relax! I love all the times we sat down and had tea while we talked :)"
+];
+
+function showCompliment() {
+    const random = compliments[Math.floor(Math.random() * compliments.length)];
+    showCard(`<div class="card"><p>${random}</p></div>`);
+}
+
+function showVoice() {
+    showCard(`
+        <div class="card">
+            <p><strong>Open when you're having a hard day 💗</strong></p>
+            <audio controls>
+                <source src="hard-day.mp3" type="audio/mpeg">
+            </audio>
+
+            <p><strong>Open when you can't sleep 🌙</strong></p>
+            <audio controls>
+                <source src="cant-sleep.mp3" type="audio/mpeg">
+            </audio>
+
+            <p><strong>Open when you feel lonely 🐶</strong></p>
+            <audio controls>
+                <source src="lonely.mp3" type="audio/mpeg">
+            </audio>
+
+            <p><strong>Open when you need motivation ⚡️</strong></p>
+            <audio controls>
+                <source src="motivation.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+    `);
+}
+
+const nextDate = new Date("2026-03-29");
+
+function showCountdown() {
+    const now = new Date();
+    const difference = nextDate - now;
+
+    if (difference <= 0) {
+        showCard(`<div class="card">We're together today 💗</div>`);
+        return;
+    }
+
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    showCard(`<div class="card">${days} days until I can hug you again 💞</div>`);
+}
+
+const quizMemories = [
+    {
+        date: "October 10th, 2025",
+        answer: "Yayoi! The date that started it all. We can choose to count the times we hungout at Chapman, but this is the day I became more interested in learning more about you. Still makes me laugh when you laid out all the Japanese gummies like a shop.",
+        images: ["1010_1.JPG", "1010_2.jpg"]
+    },    
+    {
+        date: "October 12th, 2025",
+        answer: "You invited me to hangout with Luke! I had work, but you guys came!! Glad I got to try the banh mi, it changed my world. I still watch the mukbang once in a while. I know you were dying laughing when I went to ask people to move out of the way so you and Luke could take this picture...",
+        images: ["1012.JPG"]
+    },
+    {
+        date: "October 20th, 2025",
+        answer: "We watched Look Back! I remember when we texted about it and when I told you I want to watch it with you, you seemed really happy. After, I drove us to get dinner, when you invited me to the porter concert. It was also so nice talking with you in the car, hearing about your upbringing. It was day I saw deeper into your mind and life. (I can't believe I have no pics from this day...)",
+        // images: "1020.jpg"
+    },
+    {
+        date: "October 25th, 2025",
+        answer: "PORTER!!!!! aka the day I began liking you >< You were so kind for offering to get dinner with me in San Jose, then drive me to Mountain View and back home. Revealing this for the first time: During the concert, when we stood close to each other and we looked at each other I got butterflies. The moments Shelter and Cheerleader played were incredible. Favorite concert by far.",
+        images: ["1025_1.JPG", "1025_2.jpg"]
+    },
+    {
+        date: "October 28th, 2025",
+        answer: "The day you gave me a tour of Palo Alto. I was afraid I wouldn't hangout with you anymore after Porter, so I was extremely happy we did. Zareen's was what made me fully trust your taste in food. I was so impressed by your memory on what stores and restaurants used to be in downtown. I was so happy when you took me to spots from your childhood, like the supermarket.",
+        images: ["1028_1.HEIC", "1028_2.JPG"]
+    },
+    {
+        date: "November 3rd, 2025",
+        answer: "Saratoga Day! You had asked Kimi for recs, and as a result I got to eat the fanciest burrito I've ever had. Cere tea was great - you probably don't remember this but this was the first time I saw your loud, authentic laugh and it made me super excited. I revealed my hear me out to you, but maybe I got comfortable after I saw you shopping for boxers HAHAH ",
+        images: ["1103_2.JPG", "1103_1.JPG"]
+    },
+    {
+        date: "November 6th, 2025",
+        answer: "San Francisco! I remember you called me the night before briefing me about the plan. Driving there was fun (we ate Clover onigiri), and trying Hook Fish and Komeya was amazing. And of course, this is the day we found out we liked each other <3",
+        images: ["1106_2.JPG", "1106_1.HEIC"]
+    },
+    {
+        date: "November 10th, 2025",
+        answer: "Because I said 我饿了, it made this one date possible! This was right before I left for New York, when we had pho at a fancy place in San Jose. I remember you had just changed your phone screen? Afterwards we walked around walmart, then got the mystery drink haha. I remember sitting in your car after you gave me the cherry umeshu, we just sat there listening to Blossom on repeat and just being lost in our own thoughts. We are so cute haha",
+        images: ["1110_1.JPG", "1110_2.JPG"]
+    },
+    {
+        date: "November 23th, 2025",
+        answer: "We went cloud-watching! After realizing your gatekept boba spot was nonexistent, we yapped for hours at happy lemon (talked about love languages, discovered we have the same favorite christmas song, etc.) We spent the entire day together and I remember thinking I could never get bored of spending time with you :) ",
+        images: ["1123.JPG"]
+    },
+    {
+        date: "November 30th, 2025",
+        answer: "Monterey/Carmel Day aka our first ever date after officially dating!! What a magical day seeing the jellyfish and octopus, eating bee's knees, window-shopping and watching the sunset at Carmel. I had butterflies the entire day (and I believe you did too!) Thank you for driving that day, and making it a special memory that I will cherish for my entire life. ",
+        images: ["1130_1.JPG", "1130_2.jpg"]
+    },
+    {
+        date: "December 4th, 2025",
+        answer: "Second Palo Alto date but first since dating! I was happy I got to see you this week because I knew you were busy with school. I got you sick so I brought you a care package. The matcha was so good, then we went to Gotts and you gave me a runthrough of all of the people in your friend group. Then you gave me a tour of Paly. It was a day I got to learn more about the people around you and how they made you, you! ",
+        images: ["1204_1.JPG", "1204_2.HEIC"]
+    },
+    {
+        date: "December 9th, 2025",
+        answer: "SFMOMA Date! So many interesting findings from this day; just seeing how differently you observe artwork was so mesmerizing. Favorite moments were the Ah from the game, the music room, and lying next to each other on the beanbag and watching you sleep. Then we got dessert, where we answered those questions for couples (I remember the staring activity the most) then we had burritos!",
+        images: ["1209_1.JPG", "1209_2.JPG"]
+    },
+    {
+        date: "December 12th, 2025",
+        answer: "Saratoga Day! We started at the coffee shop where we did (fun) work and shared the curry bread. Walking around downtown campbell was so fun, looking at different teas at Steepers, having you read aloud Greenlights, etc. You kissed me on the cheek that day and my head went blank ><",
+        images: ["1212_1.JPG", "1212_2.JPG"]
+    },
+    {
+        date: "December 16th, 2025",
+        answer: "I got to see you twice this day! I met you at the matcha place, and I dropped my matcha but you gave me the cinnamon tea that made me feel better. You gave me a persimmon to eat on the drive to Burlingame to meet Emi. After, I met up with you again, where you performed your song for me. It was so dreamy, and the kiss after added more magic!!! I apologize again for making things awkward... I was just nervoussss (This pic is from the next day where we spent a very long time together in the Clover parking lot tehe)",
+        images: ["1216_1.JPG", "1216_2.heic"]
+    },
+    {
+        date: "December 23th, 2024",
+        answer: "Christmas Day!! You were thrown out of your friend's car at my place after your OC trip. You came over for the first time, where we had happy hour and watched Puss in Boots. Then, we got to see many pretty Christmas lights!!! It was a fun date just holding hands and walking around. I remember you got a really sweet drink in Downtown SJ so you left it in my car lol",
+        images: ["1223_1.JPG", "1223_2.JPG "]
+    },
+    {
+        date: "December 28th, 2024",
+        answer: "This day was packed!!! We started with the Italian subs, then Haiku, then Kelley Park, then Pekoe, then H Mart, then Dave's. What a legendary day. My favorite part was goofing around at Kelley Park, and competing against each other on Gomoku and arm wrestling Pekoe lolll",
+        images: ["1228_1.JPG", "1228_2.JPG"]
+    },
+    {
+        date: "January 3rd, 2026",
+        answer: "Retreat trip!!! Thank you so much for driving us. Felt weird facing the NSU people as a couple, but it was so much fun. This is also when you called me Liba and I said I was losing brain cells haha. ",
+        images: ["0103_3.JPG" , "0103_4.JPG"]
+    },
+    {
+        date: "January 12th, 2025",
+        answer: "San Jose day! You picked me up and took me to Dr. Ink where we did some fun work together. For lunch you recommended I try the sour soup because it was one of your favs and I enjoyed it. We walked in Communications Hill where we just yapped (I remember doing Mitsuha impressions?) Also this was the day you gave me the photo frame that I now have decorated on my table :)",
+        images: ["0112_3.JPG", "0112_2.JPG"]
+    },
+    {
+        date: "January 19th, 2025",
+        answer: "Double date with Abi and Matthew in Palo Alto! I was super excited for this when we were planning where we should take them. Zareens, matcha, and the dumpling place were all spots you had shown me and I could now understand how fun it is introducing places you love to others. Also this night was pretty magical because you took my first time..... >///<",
+        images: ["0119_2.JPG", "0119_1.JPG"]
+    },
+    {
+        date: "January 24th, 2025",
+        answer: "Takoyaki party! You met my family for the first time, and they were very glad to meet you! I hope your dad made you laugh and my mom made you feel welcomed. I remember you sleeping on my bed and I was curious what was going on in your mind.",
+        images: ["0124_1.JPG", "0124_2.JPG"]
+    },
+    {
+        date: "January 25th, 2025",
+        answer: "Another SF day, this time in J-town area! I can't stop thinking about that lunch spot with the beef and rice; I want to go again. The bingsoo was good (just the parts I was able to eat), then you gave me three options on what we should do next and I'm glad I chose going to the park. The sunset was so beautiful and it made it even more magical that it was a location you had gone to with your mom.",
+        images: ["0125_1.JPG", "0125_3.JPG"]
+    },
+    {
+        date: "January 31st, 2025",
+        answer: "I returned from Hawaii and you took me exactly where I wanted to go: Chili's!!! I was so amazed by your mind-reading powers. I loved watching you film a mukbang of the triple dipper. ",
+        images: ["0131_1.JPG", "0131_2.JPG"]
+    },
+    {
+        date: "February 2nd, 2025",
+        answer: "This was the day after I spent the night at your place. We went to Jeffrey's, but I hate too fast so I had a stomach ache. You gave me a sour candy that you told me you eat when you're in the same situation. We went to Mr. green bubble, where you showed me a certified and tested best boba order that you had identified from your experience working there. I love that video of you drinking it so much, it's so cute.",
+        images: ["0202_1.JPG", "0202_2.JPG"]
+    },
+    {
+        date: "February 4th, 2025",
+        answer: "This day I visited you at your campus and I remember you laying on my lap and taking a nap. Then we decided to go to the Oakridge movie theater to watch The Colors Within! That song was so catchy :D Afterwards, we had dinner at the Mexican place where you thought I was mad at you (I promise I was just zoning out...)",
+        images: ["0204_1.JPG", "0204_2.JPG"]
+    },
+    {
+        date: "February 8th, 2025",
+        answer: "What an eventful day seeing a lot of friends! We started by visiting Gene's place and getting sushi at this super suspicious place, then going to Haiku. After that we went to SJSU where we got to see Motts and Katie (such a great surprise!). After resting at your place, we had the double date with Bryant and Alexis. I remember watching you try manual? or some kind of new driving method that I don't know because I'm clueless about cars. It was cool tho! (This is the face I would make if you said you were going to steal all my food",
+        images: ["0208_1.JPG", "0208_2.JPG"]
+    },
+    {
+        date: "February 13th, 2025",
+        answer: "Valentine's dinner at the one and only Imperial Treasures! I still think about that Peking Duck sometimes... soooo yummyyyy! You were dressed so nicely (I remember helping you pick out which suit you should wear). After dinner we went to Ume Tea for the mochi boba, then back at your place we gave each other our gifts. When you gave me the album everything connected; I thought you were simply looking for a notebook when we had gone to Kinokuniya, but you had been planning this gift for so long!! I was also glad that you liked the manga :) ",
+        images: ["0213_1.JPG", "0213_2.JPG"]
+    },
+    {
+        date: "February 15th, 2025",
+        answer: "We hiked together!! That was actually a pretty tough hike, but I think we burnt enough calories to have a very big dinner at Mazra!!! I remember you rapping nonsense-uh I mean-rapping great lyrics on the hike back down!",
+        images: ["0215_1.JPG", "0215_2.JPG"]
+    },
+    {
+        date: "February 17th, 2025",
+        answer: "Our last date before I moved to Japan... You took me to get one last banh mi, then we went to the park where we first watched clouds. Bittersweet moments, but I'm glad this was the date we had. When you gave me the matcha cookie I burst into tears because I couldn't believe I was going far away from someone as sweet as you. You are such an amazing boyfriend!!!",
+        images: ["0217_3.JPG", "0217_1.JPG"]
+    },
+    {
+        date: "July 3rd, 2025",
+        answer: "This is the day you arrived to Japan and I met you at Narita Airport!!! Your first meal was Yoshinoya, which I was unsure at first whether it would be a good first meal, but I'm glad you and Juan were satisfied. You made my dad happy by trying the Yoshinoya curry!!! ",
+        images: ["0703_3.JPG", "0703_2.HEIC"]
+    },
+    {
+        date: "July 5th, 2025",
+        answer: "After waking up with you for the first time in months, we went out to eat the creamy udon (sooo yummmm). We walked around Ebisu, where we went to Muji, the Peacock store (bought fruits!) got a mango drink from Starbucks. I remember when we were exploring that tall building you waved at one of the chefs and he waved back haha. At night, we met up with Juan and Ethan at Sushiro!",
+        images: ["0705_1.HEIC", "0705_2.JPG"]
+    },
+    {
+        date: "July 6th, 2025",
+        answer: "Double Date with Beth and Hanbang - thank you for agreeing to hangout with them!! Lunch was fun, when you were giving Hanbang brain teasers. It was a super hot day, so I'm glad we went to Donki. At the Starbucks reserve, we tried some nice drinks and secretly ate some I'm Donut tehe",
+        images: ["0706_1.HEIC", "0706_2.JPG"]
+    },
+    {
+        date: "July 9th, 2025",
+        answer: "On my birthday, we had dinner with Maya and Kai! The Italian was pretty good, but I remember the food we had at Gasuto afterwards more lol. When we got home, you gave me such amazing gifts like the mouse that I had been wanting, pretty earrings I wear regularly, and the birthday video of course!!! What a luxury it is to be loved this much :)))",
+        images: ["0709_1.HEIC", "0709_2.HEIC"]
+    },
+    {
+        date: "July 10th, 2025",
+        answer: "After my work, you met up with me in Hiyoshi and it was pouring rain. We decided to walk into a ramen shop and had ramen together!",
+        images: ["0710.HEIC"]
+    },
+    {
+        date: "July 12th, 202",
+        answer: "Kyoto Day 1!! I was so excited for our first trip together. I had a fun time on the Shinkansen, even though you were sleeping most of the time haha. This is the day we had the pudding, the best curry we've ever had, and the beef!!",
+        images: ["0712_4.JPG", "0712_1.HEIC"]
+    },
+    {
+        date: "July 13th, 2025",
+        answer: "Kyoto Day 2!! We went to Kifune Shrine where the green was so pretty. It was pretty crowded, but I'm glad we got to go to that restaurant where we ate soba and drank matcha. The hike was crazy and we were sweating so much, but I'm glad we got to do it!! That night, we went to nishiki market for the first time and amazed by the amount of food they had :000",
+        images: ["0713_1.HEIC", "0713_2.HEIC"]
+    },
+    {
+        date: "July 14th, 2025",
+        answer: "Kyoto Day 3!! We woke up early to go get matcha, then we walked around that area. For lunch, we went to a beef place you had saved in your Google Maps, then we had to head to Nishiki market to get the food we hadn't tried yet. This is also the day we bumped into Laine and her mom on the streets!! Finally, we ended the night at the best bar. I wonder how that bartender is doing...",
+        images: ["0714_2.HEIC", "0714_4.JPG"]
+    },
+    {
+        date: "July 15th, 2025",
+        answer: "Last day in Kyoto! I was so happy when you agreed to go to Nishiki Market one last time to get that chicken. It was worth it in my opinion! Then we packed up and left Kyoto to take the shinkansen to Nagoya, where you had your first hitsumabushi (unagi bowl). After a couple more hours on the train, we finally made it to TAKAYAMAAA. The hotel was so nice with the private onsens and the free ramen!",
+        images: ["0715_1.HEIC", "0715_2.JPG"]
+    },
+    {
+        date: "July 16th, 2025",
+        answer: "Takayama Day 2! We ate some food on the street along the river, and you also found a great matcha bowl! Then we took the bus to the place with the old houses, which was close to their closing time but we still got to walk around (remember when we tried to play with the spinning top?) In the evening, we made the spontaneous decision to go to the family-owned Chinese restaurant where we had amazing mapo tofu and fried rice. We couldn't go to the original hida beef place, so we went to a different family-owned restaurant. Finally, we went to that tiny drinking spot where we ordered an enormous amount of food and ate what we could call the best hida beef LOLLL. Oh yea and I died, thank you for taking care of my that night *cry*",
+        images: ["0716_4.JPG", "0716_3.JPG"]
+    },
+    {
+        date: "July 17th, 2025",
+        answer: "Takayama Day 3! We ate at the popular ramen place where the server was very impressed by your Japanese. We went to this place called Shirakawa with more old houses, where we ate a hida beef skewer and soft serve! Of course we had to end the night at another hida beef restaurant. I remember staying there for a long time and just talking together until closing time.",
+        images: ["0717_3.JPG", "0717_3.HEIC"]
+    },
+    {
+        date: "July 18th, 2025",
+        answer: "Final day at Takayama!! For lunch, we had hida beef at the restaurant that looked like an old house and we talked with the owner person. After going to a cafe where you ordered the matcha lemonade, we walked a bit to the shopping center that had a Uniqlo and a sports store!! I loved watching you look intensely at the badminton products; it's cute seeing you get passionate over something you're interested in! The journey back home, I was a bit stressed about time and being able to find a seat on the Shinkansen, but I'm glad we made it safe :D",
+        images: ["0718.jpg"]
+    },
+    {
+        date: "July 19th, 2025",
+        answer: "This day, I spent the day at my grandparents', then met with you at the Chinese restaurant where you and Ethan had gone before. Knowing this was the place you had rated so highly and even have the receipt hung on your wall, I had very high expectations. And I wasn't disappointed at all!! Dating you has introduced me to all the different mapo tofus, and this one has been one of the best - so freaking delicious. We went to GU afterwards where I got my fake glasses, then we walked into another restaurant where we only heard Chinese and ate some skewers yummm",
+        images: ["0719.jpg"]
+    },
+    {
+        date: "July 20th, 2025",
+        answer: "The Badminton Japan Open! I was sooo excited to go to this with you ever since I got the tickets. Badminton is a fun sport to watch because their movements are so quick!! After that, we went to Shinjuku area and ate at the burger place where you fell asleep! We had a reservation at Dra7, so until then we walked around the area where you were amazed by the line of food options. The food we had at Dra7 was amazing, especially the chili fries omgggg. It was so funny when we asked the server if Ham was her real name, she must've thought we were so dumb LOLOL",
+        images: ["0720_1.HEIC", "0720_3.JPG"]
+    },
+    {
+        date: "July 21st, 2025",
+        answer: "This day might not have been as eventful as the others, but it's still one of my favorites! We decided to go to a cafe in Hiyoshi, where we ordered the fruit sodas and some dessert, which I fed to you while you did your work haha. Then, we got a kebab, which we were both surprised by how good it was (the start of our addiction to kebabs!!!). Later that day, we moved to Shin-Okubo to have dinner with Laine and Kai. The bingsoo we got for dessert was enormous omg. Super fun day!! (Are you happy I added this other pic of me sleeping...",
+        images: ["0721_3.JPG", "0721_4.JPG"]
+    },
+    {
+        date: "July 22nd, 2025",
+        answer: "This was a regular weekday. In the morning, I was frantically trying to get ready while prepping for my lunch, and you did me great service by making yakisoba for me! I was so happy during the lunchtime, eating the yakisoba that you had cooked up for me so generously. At night, you met up with me close to the client office and we went to an izakaya in Ginza. It was an energetic place, where the servers were shouting and they brought out the water in a whole gin bottle. I remember when you were in the bathroom, one of the servers told me that you and I looked good together and that made me feel so happy!!!",
+        images: ["0722_3.JPG", "0722_1.HEIC"]
+    },
+    {
+        date: "July 25th, 2025",
+        answer: "TACO NIGHT!!! This is the day you made your famous guacamole and chefed up some delicious tacos. It was so much fun playing the Mexican music and dancing around while you cooked. I remember the guacamole being so good I just couldn't stop eating it with the plantain chips.",
+        images: ["0725_1.HEIC, 0725_2.HEIC"]
+    },
+    {
+        date: "July 26th, 2025",
+        answer: "This day, we took a long train ride to Odaiba where we walked around the mall. I remember I was feeling tired so you let me nap on your shoulder for a bit hehe. This day we were originally thinking about going to the fireworks festival, so I'm glad we got to see a glimpse of it after we took the sky train. You took me to Yakiniku Like, then we ended the day with your first-ever Saizeriya experience.",
+        images: ["0726_1.HEIC", "0726_2.JPG"]
+    },
+    {
+        date: "July 27th, 2025",
+        answer: "GRAND TREE!!! I can't believe I had never visited this mall, because it literally has everything!! Thank you for introducing me to it; the supermarket is huge and has so much food. I loved the crepe you got (I should've gotten than instead of the milk ice cream...) and we also got to get Gongcha! Then, we took the train all the way to Ueno where we had a nice walk around the park. There was a festival happening by the lake and we were so tempted to get food, but I'm glad we didn't because we had a reservation at the Shanghainese restaurant. Funny how I suggested it but you did all of the ordering. I'm glad you liked the food there; it was so cute watching you eat everything.",
+        images: ["0727_2.HEIC", "0727_4.JPG"]
+    },
+    {
+        date: "August 2nd, 2025",
+        answer: "This day I took you to my favorite cafe in Shinjuku where we had nice brunch. But I guess we were still hungry because we went to the udon place right after for second lunch. Then, we moved to Harajuku and went to dotcomspace, your favorite coffee shop!!! I then asked you if you wanted to do karaoke and you were down, so we moved to a karaoke place to sing our favorite songs :D",
+        images: ["0802_1.JPG", "0802_3.HEIC"]
+    },
+    {
+        date: "August 3rd, 2025",
+        answer: "This was a very interesting day. We were committed to going to the water museum, so we picked a sushiro that was in close proximity and ate there. But this is the day that I got a UTI and my stomachache was making it hard for me to work... thank you for being patient with me that day! Unfortunately we coudn't make it to the water museum on time, but I hope the delcicious shaved ice we had after made up for it!",
+        images: ["0803_1.HEIC", "0803_3.JPG"]
+    },
+    {
+        date: "August 5th, 2025",
+        answer: "After work, you met up with me outside of my office and we took the train to Nakameguro. Before dinner, we went to a tea shop where the worker kept giving us free samples lolol. We ended up both getting the black bean tea! Then, we went to the restaurant with the sheet pastaaaa",
+        images: ["0805_1.HEIC", "0805_2.JPG"]
+    },
+    {
+        date: "August 6th, 2025",
+        answer: "This was the day I tried BUTTER for the FIRST TIME! So yummy and creamy, but I wish you were able to see my live reaction in person... We walked around the underground area of Tokyo Station where we got the lemon happy turns (you were so sweet to leave your notes on post-its). The yakiniku we had for dinner was terrific!! Finally, though I didn't want the day to end because you were leaving the next day, we ended by getting smoothies at 7-eleven. Speaking of 7-eleven, look at this pile of lemon chips you got.",
+        images: ["0806_1.HEIC", "0806_2.JPG"]
+    },
+    {
+        date: "December 27th, 2025",
+        answer: "I arrived to the US after 10 months of being away!! You picked me up from the airport and gave me fruits and juice, which was so nice because you were accounting for my little appetite. We had dinner with Emi at Chili's, the one place I definitely wanted to go, and I'm glad I got to experience the cheese pull again. After a spontaneous Target trip to get a bunch of the probiotic drinks (the taste testing was so much fun haha), I got to see your friends briefly at SF! They seemed really happy to see you, so I'm glad we went!",
+        images: ["122725_1.jpg", "122725_2.HEIC"]
+    },
+    {
+        date: "December 28th, 2025",
+        answer: "A day after coming back to the US, we walked Peanut to a nearby coffee shop and tried their latte. For lunch, you took me to the place that you always go after badminton and I finally got to try their beef dish which was AMAZING!! I wish I had a bigger appetite, screw the jetlag.... After that, we walked around the nearby Daiso and markets, then went back to your place to watch the third Knives Out.",
+        images: ["122825_4.JPG", "122825_3.JPG"]
+    },
+    {
+        date: "December 29th, 2025",
+        answer: "The iconic taco day!!! You made my dream come true by taking me to all those taco spots and getting a total of 12 tacos! Then we went to Color Me Mine, which I think was a genius idea; I had so much fun painting each other's salt and pepper shakers. Finally, the Molly Tea x Salt & Straw was the perfect combination - you're the only person that doesn't make me feel guilty about getting two desserts :3",
+        images: ["122925_4.HEIC", "122925_1.JPG"]
+    },
+    {
+        date: "January 1st, 2026",
+        answer: "This year's New Year's Day, you joined me and my family! You got to witness the typical way we spend the first day of the year every year. I hope we didn't bore you too much with the marathon relay on TV... And I hope you loved the oden and the other food!! You were so nice for bringing the chocolate covered oranges, the tea, and your favorite chips. So funny that my mom gave the chips back to you because she knew they were too precious.",
+        images: ["010126_1.HEIC"]
+    },
+    {
+        date: "January 2nd, 2026",
+        answer: "You drove me to so many places this day! Thank you for listening to my cravings and taking me to Taco Bell, In-n-Out, AND Chick-Fil-A! I was so happy I got to eat at those places again. After that, we read some design books at the Menlo Park Library before we headed over to hangout with Abi. And thank you for agreeing to deliver the cheesecake to Emi!! That phone call you made was pretty funny lolol.",
+        images: ["010226_1.HEIC", "010226_2.HEIC"]
+    },
+    {
+        date: "January 4th, 2026",
+        answer: "Our most recent SF date!!! We went to the farmers market right before they closed, where we ate the banh mi and the sandwiches. I'm so glad I got to meet Eyal and Alex, since those are the two people you probably see the most now. Then, you drove us to SF so we could finally go to the planetarium!!! I was so happy you remembered that I wanted to go for the longest time...! It was also fun walking around in the rain forest - it reminded me of our date at the Monterey Bay Aquarium!! And I can't forget about the amazing dinner we had at Hook Fish after :D",
+        images: ["010426_3.HEIC", "010426_1.heic"]
+    },
+    {
+        date: "Jauary 7th, 2026",
+        answer: "I remember this day was a Wednesday, because we got to have lunch with your mom! It was so funny sitting in your car with your mom while you were getting gas, and I asked her a question about Beijing food and she immediately was like - David, Lisa wants Beijing food, let's go! Glad we trusted her because the food was sooo goood, I was so full and happy at the end. I also finally got to try Heytea for the first time and it did not disappoint! Remember after that we went to the store with all the cups and plates and stuff and we were guessing which design my mom would want the most. And we walked in to the skewer place just in time before they started their lunch break! At night, we met up with Abi and Matthew to get pho (where you were so proud of your meme), then went to Canes, then went to Dairy Queen for a blizzard. Oh, and we had so much fun playing the imposter word game at Downtown Campbell!",
+        images: ["010726_4.HEIC", "010726_2.HEIC"]
+    },
+    {
+        date: "January 9th, 2026",
+        answer: "I got you sick again :( So I went to your place and brought you lunch, and we had a chill day! And even though you were sick, you made me a matcha! Also we placed the Mario mini games on your computer; I loved playing the one where you try to find the character :D",
+        images: ["010926_1.JPG", "010925_2.HEIC"]
+    },
+    {
+        date: "January 10th, 2026",
+        answer: "A nice day spent in Palo Alto. Thank you for listening to my request and taking me to Zareens, which was amazing as I remembered it. You also did something crazy by ordering pizza next order even before our food was served at Zareens HAHA. You explained the concept behind the pizza shop, and how they often collab with famous people. We played connect 4 outside the game store (I lost...), then we moved to downtown Palo Alto so we could each get a fun drink: Good Thing for me, Tong Sui for you!",
+        images: ["011026_2.JPG", "011026_1.JPG"]
+    }
+];
+
+function showQuiz() {
+    const random = quizMemories[Math.floor(Math.random() * quizMemories.length)];
+
+    let imagesHTML = "";
+
+    if (random.images && random.images.length > 0) {
+        imagesHTML += `<div class="memory-images">`;
+        random.images.forEach(img => {
+            imagesHTML += `<img src="${img}">`;
+        });
+        imagesHTML += `</div>`;
+    }
+
+    showCard(`
+        <div class="card">
+            <p><strong>${random.date}</strong></p>
+            <p>${random.answer}</p>
+            ${imagesHTML}
+        </div>
+    `);
+}
+
+
+const secretMessages = [
+    "You make me feel like the luckiest girl in the world. I love you ❤️",
+    "I think about you every chance I get. Especially when I'm alone and I'm not feeling well, your face immediately comes up in my mind.",
+    "Thank you for opening my world up to new experiences and emotions. You've drastically changed my life to the better!",
+    "You are goated with the sauce.",
+    "GAGAGAGAGAGAGAGAGAGAGAGAGAGAGA"
+];
+
+function showSecret() {
+    const popup = document.getElementById("secretPopup");
+    const text = document.getElementById("secretText");
+    const random = secretMessages[Math.floor(Math.random() * secretMessages.length)];
+    text.textContent = random;
+    popup.classList.remove("hidden");
+}
+
+function closeSecret() {
+    document.getElementById("secretPopup").classList.add("hidden");
+}
+
+function startRandomSecrets() {
+    const randomTime = Math.floor(Math.random() * 40000) + 20000;
+    setTimeout(() => {
+        showSecret();
+        startRandomSecrets();
+    }, randomTime);
+}
+
+startRandomSecrets();
+
+</script>
+
+</body>
+</html>
